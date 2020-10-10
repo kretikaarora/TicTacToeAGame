@@ -2,7 +2,7 @@
 
 namespace TicTacToeGameSimulator
 {
-     public class TicTacToeGame
+    public class TicTacToeGame
     {
         char[] board = new char[10];
         bool[] positionOccupied = new bool[10];
@@ -12,9 +12,13 @@ namespace TicTacToeGameSimulator
         {
             Console.WriteLine("Welcome to TicTacToeGame");
             TicTacToeGame ticTacToeGame = new TicTacToeGame();
-            char[] board= ticTacToeGame.BoardFormation();
+            char[] board = ticTacToeGame.BoardFormation();
+            ticTacToeGame.CharacterChoice();
+            ticTacToeGame.UserMovement();
+            ticTacToeGame.ComputerMovement();
+            
         }
-        
+
         public char[] BoardFormation()
         {
             // initialising new board 
@@ -34,7 +38,7 @@ namespace TicTacToeGameSimulator
         {
             Console.WriteLine("1. enter 1 for choosing X \n2. enter 2 for choosing O");
             int choice = Convert.ToInt32(Console.ReadLine());
-            switch(choice)
+            switch (choice)
             {
                 case 1:
                     userChoice = 'X';
@@ -48,6 +52,7 @@ namespace TicTacToeGameSimulator
                     userChoice = 'X';
                     computerChoice = 'O';
                     Console.WriteLine("invalid input \n userchoice is alotted X and computerchoice is O");
+                    break;
 
             }
 
@@ -60,5 +65,46 @@ namespace TicTacToeGameSimulator
             Console.WriteLine("___________");
             Console.WriteLine("|{0} |{1} |{2} |", board[7], board[8], board[9]);
         }
+        public void UserMovement()
+        {
+            bool flag = true;
+            while (flag)
+            {
+                Console.WriteLine("enter the position you want to fill");
+                int position = Convert.ToInt32(Console.ReadLine());
+                if (position >= 1 && position <= 9 && positionOccupied[position])
+                {
+                    Console.WriteLine("position occupied is already filled");
+                }
+                if (position < 1 && position > 9)
+                {
+                    Console.WriteLine("invalid entry");
+                }
+                else
+                {
+                    board[position] = userChoice;
+                    flag = false;
+                }
+                ShowBoard();
+            }
+        }
+        public void ComputerMovement()
+        {
+            Random rand = new Random();
+            bool flag = true;
+            while (flag)
+            {
+                int position = rand.Next(1,10);
+                if(!positionOccupied[position])
+                {
+                    board[position] = computerChoice;
+                    flag = false;
+                }
+
+            }
+            ShowBoard();
+        }
     }
 }
+
+
