@@ -15,7 +15,7 @@ namespace TicTacToeGameSimulator
             char[] board = ticTacToeGame.BoardFormation();
             ticTacToeGame.CharacterChoice();
             ticTacToeGame.UserMovement();
-            ticTacToeGame.ComputerMovement();
+            
             
         }
 
@@ -86,6 +86,7 @@ namespace TicTacToeGameSimulator
                     flag = false;
                 }
                 ShowBoard();
+                ComputerMovement();
             }
         }
         public void ComputerMovement()
