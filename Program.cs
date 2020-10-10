@@ -8,13 +8,18 @@ namespace TicTacToeGameSimulator
         bool[] positionOccupied = new bool[10];
         char computerChoice;
         char userChoice;
+        const int HEAD = 1;
+        const int TAIL = 0;
+        int chances = 0;
+        Random rand = new Random();
+        
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToeGame");
             TicTacToeGame ticTacToeGame = new TicTacToeGame();
             char[] board = ticTacToeGame.BoardFormation();
             ticTacToeGame.CharacterChoice();
-            ticTacToeGame.UserMovement();
+            ticTacToeGame.Toss();
             
             
         }
@@ -31,6 +36,7 @@ namespace TicTacToeGameSimulator
                 positionOccupied[position] = false;
 
             }
+            positionOccupied[0] = true;
             return board;
 
         }
@@ -67,44 +73,81 @@ namespace TicTacToeGameSimulator
         }
         public void UserMovement()
         {
-            bool flag = true;
-            while (flag)
+            
+            while (EmptySpace())
             {
-                Console.WriteLine("enter the position you want to fill");
-                int position = Convert.ToInt32(Console.ReadLine());
-                if (position >= 1 && position <= 9 && positionOccupied[position])
+                bool flag = true;
+                while (flag)
                 {
-                    Console.WriteLine("position occupied is already filled");
+                    Console.WriteLine("enter the position you want to fill");
+                    int position = Convert.ToInt32(Console.ReadLine());
+                    if (position >= 1 && position <= 9 && positionOccupied[position])
+                    {
+                        Console.WriteLine("position occupied is already filled");
+                    }
+                    else if (position < 1 || position > 9)
+                    {
+                        Console.WriteLine("invalid entry");
+                    }
+                    else
+                    {
+                        board[position] = userChoice;
+                        positionOccupied[position] = true;
+                        chances++;
+                        flag = false;
+                    }
+                    ShowBoard();
+                    if (chances < 10)
+                    {
+                        ComputerMovement();
+                    }
                 }
-                if (position < 1 && position > 9)
-                {
-                    Console.WriteLine("invalid entry");
-                }
-                else
-                {
-                    board[position] = userChoice;
-                    flag = false;
-                }
-                ShowBoard();
-                ComputerMovement();
             }
         }
         public void ComputerMovement()
-        {
-            Random rand = new Random();
+        {  
             bool flag = true;
+          
             while (flag)
             {
                 int position = rand.Next(1,10);
                 if(!positionOccupied[position])
                 {
                     board[position] = computerChoice;
+                    positionOccupied[position] = true;
+                    chances++;
                     flag = false;
                 }
 
             }
             ShowBoard();
         }
+        public void Toss()
+        {
+            int choice = rand.Next(0, 2);
+            switch(choice)
+            {
+                case HEAD:
+                    UserMovement();
+                    break;
+                case TAIL:
+                    ComputerMovement();
+                    UserMovement();
+                    break;
+            }
+        }
+        public bool EmptySpace()
+        {
+            for (int i = 0; i <= 10; i++)
+            {
+                if (!positionOccupied[i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
 
