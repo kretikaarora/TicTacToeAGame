@@ -68,7 +68,9 @@ namespace TicTacToeGameSimulator
         }
         public void UserMovement()
         {
-           while (EmptySpace())
+
+        while (EmptySpace())
+
             {
                 bool flag = true;
                 while (flag)
@@ -92,10 +94,8 @@ namespace TicTacToeGameSimulator
 
                         flag = false;
                     }
-
                     ShowBoard();
-
-                    string result = HasWon();
+                   string result = HasWon();
                     if (result == "User")
                     {
                         Console.WriteLine("user is the winner");
@@ -109,7 +109,11 @@ namespace TicTacToeGameSimulator
                     else
                     {
                         Console.WriteLine("continue playing");
-                    }                   
+
+                    }                 
+
+                                       
+
                 }
                 ComputerMovement();
                 string result1 = HasWon();
@@ -124,44 +128,86 @@ namespace TicTacToeGameSimulator
                     Console.WriteLine("continue playing");
                 }
             }
-            if (chances==9)
+           if(chances==9)
             Console.WriteLine("it is a tie");
         }
         public void ComputerMovement()
-        { bool flag = true;
-         while (flag)
+
+        {          
+          while (EmptySpace())
+
             {
-                DefenceAttack();
-                if (index == 2)
+                for (int j = 1; j < 10; j++)
                 {
-                    Console.WriteLine(" good work ,computer moved with defence");
-                    chances++;
-                    flag = false;
-                }
-                else
-                {
-                    FindCanWon();
-                    if(index == 1)
+
+                    if (!positionOccupied[j])
                     {
-                        Console.WriteLine(" good work ,computer moved with strategy");
-                        chances++;
-                        flag = false;
-                    }
-                    else
-                    {
-                        int position = rand.Next(1, 10);
-                        if (!positionOccupied[position])
+                        board[j] = userChoice;
+                        string winner1 = HasWon();
+                        if (winner1 == "User")
                         {
-                            board[position] = computerChoice;
-                            positionOccupied[position] = true;
+                            board[j] = computerChoice;
+                            positionOccupied[j] = true;
+                            Console.WriteLine("computer defence attack");
                             chances++;
                             ShowBoard();
-                            flag = false;
+                            return;
                         }
+                        else
+                            board[j] = ' ';
+                    }
+
+                }
+                for (int i = 1; i < 10; i++)
+                {
+                    if (!positionOccupied[i])
+                    {
+                        board[i] = computerChoice;
+                        string winner = HasWon();
+                        if (winner == "Computer")
+                        {
+                            positionOccupied[i] = true;
+                            Console.WriteLine("computer marks at {0}", i);
+                            chances++;
+                            Console.WriteLine("computer worked strategically");
+
+                            ShowBoard();
+                            return;
+                        }
+                        else
+                            board[i] = ' ';
+
+
+
                     }
                 }
+
+                int[] cornerPosition = new int[] { 1, 3, 7, 9 };
+                int position = cornerPosition[rand.Next(4)];
+                if (!positionOccupied[position])
+                {
+                    board[position] = computerChoice;
+                    positionOccupied[position] = true;
+                    Console.WriteLine("occupied corner position");
+                    chances++;
+                    ShowBoard();
+                    return;
+                }
+                int position1 = rand.Next(1, 10);
+                if (!positionOccupied[position1])
+                {
+                    board[position1] = computerChoice;
+                    positionOccupied[position1] = true;
+                    chances++;
+                    ShowBoard();
+                    return;
+                }
+            }
+
+
                 
          }           
+
         }
         public void Toss()
         {
@@ -203,8 +249,7 @@ namespace TicTacToeGameSimulator
             }
             for (int i = 1; i <= 3; i++)
             {
-
-                if (board[i] == board[i + 3] && board[i + 3] == board[i + 6] && board[i] != ' ')
+              if (board[i] == board[i + 3] && board[i + 3] == board[i + 6] && board[i] != ' ')
 
                 {
                     if (board[i] == userChoice)
@@ -229,7 +274,9 @@ namespace TicTacToeGameSimulator
                     return "Computer";
             }
             return "Play";
-        }
+
+        }       
+
         public void FindCanWon()
         { 
             for (int i = 1; i < 10; i++)
@@ -273,9 +320,7 @@ namespace TicTacToeGameSimulator
                     else
                         board[j] = ' ';
                 }
-
             }
-
         }
     }
 }
