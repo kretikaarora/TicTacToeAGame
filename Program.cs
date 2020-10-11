@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace TicTacToeGameSimulator
 {
@@ -16,11 +17,28 @@ namespace TicTacToeGameSimulator
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to TicTacToeGame");
-            TicTacToeGame ticTacToeGame = new TicTacToeGame();
-            char[] board = ticTacToeGame.BoardFormation();
-            ticTacToeGame.CharacterChoice();
-            ticTacToeGame.Toss();
+           
+            bool flag = true;
+            while(flag)
+            {
+                Console.WriteLine("1. Press Y to play  game");
+                Console.WriteLine("1. Press N to Exit game");
+                char anotherGame = Convert.ToChar(Console.ReadLine());
+                if(anotherGame == 'Y')
+                {
+
+                    Console.WriteLine("Welcome to TicTacToeGame");
+                    TicTacToeGame ticTacToeGame = new TicTacToeGame();
+                    char[] board = ticTacToeGame.BoardFormation();
+                    ticTacToeGame.CharacterChoice();
+                    ticTacToeGame.Toss();
+
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
         }
 
         public char[] BoardFormation()
