@@ -93,16 +93,33 @@ namespace TicTacToeGameSimulator
                     {
                         board[position] = userChoice;
                         positionOccupied[position] = true;
-                        chances++;
+                        
                         flag = false;
                     }
+
                     ShowBoard();
-                    if (chances < 10)
+                    
+                    string result = HasWon();
+                    if(result=="User")
                     {
-                        ComputerMovement();
+                        Console.WriteLine("user is the winner");
+                        return;
                     }
+                    else if(result =="Computer")
+                    {
+                        Console.WriteLine("computer is the winner");
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("continue playing");
+                    }
+                    ComputerMovement();
+
                 }
+
             }
+            Console.WriteLine("it is a tie");
         }
         public void ComputerMovement()
         {  
@@ -115,7 +132,7 @@ namespace TicTacToeGameSimulator
                 {
                     board[position] = computerChoice;
                     positionOccupied[position] = true;
-                    chances++;
+                    
                     flag = false;
                 }
 
@@ -138,7 +155,7 @@ namespace TicTacToeGameSimulator
         }
         public bool EmptySpace()
         {
-            for (int i = 0; i <= 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 if (!positionOccupied[i])
                 {
@@ -146,6 +163,52 @@ namespace TicTacToeGameSimulator
                 }
             }
             return false;
+        }
+        public string HasWon()
+        {
+            for (int i = 1; i < 8; i = i + 3)
+            {
+                if (board[i] == board[i + 1] && board[i + 1] == board[i + 2] && board[i] != ' ')
+                {
+                    if (board[i] == userChoice)
+                        return "User";
+                    else
+                        return "Computer";
+                }                     
+
+            }
+            for (int i = 1; i <= 3; i++)
+            {
+                
+                if (board[i] == board[i + 3] && board[i + 3] == board[i + 6] && board[i] != ' ')
+
+                {
+                    if (board[i] == userChoice)
+                        return "User";
+                    else
+                        return "Computer";
+
+                }
+
+            }
+
+            if (board[1] == board[5] && board[5] == board[9] && board[1] != ' ')
+            {
+                if (board[1] == userChoice)
+                    return "User";
+                else
+                    return "Computer";
+            }
+            if (board[3] == board[5] && board[5] == board[7] && board[3] != ' ')
+            {
+                if (board[3] == userChoice)
+                    return "User";
+                else
+                    return "Computer";
+            }
+            return "Play";
+
+
         }
 
     }
