@@ -12,7 +12,8 @@ namespace TicTacToeGameSimulator
         const int TAIL = 0;
         int chances = 0;
         Random rand = new Random();
-        
+        int index = 0;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to TicTacToeGame");
@@ -20,8 +21,8 @@ namespace TicTacToeGameSimulator
             char[] board = ticTacToeGame.BoardFormation();
             ticTacToeGame.CharacterChoice();
             ticTacToeGame.Toss();
-            
-            
+
+
         }
 
         public char[] BoardFormation()
@@ -73,7 +74,7 @@ namespace TicTacToeGameSimulator
         }
         public void UserMovement()
         {
-            
+
             while (EmptySpace())
             {
                 bool flag = true;
@@ -84,6 +85,7 @@ namespace TicTacToeGameSimulator
                     if (position >= 1 && position <= 9 && positionOccupied[position])
                     {
                         Console.WriteLine("position occupied is already filled");
+                        Console.WriteLine("enter the other position you want to fill");
                     }
                     else if (position < 1 || position > 9)
                     {
@@ -93,19 +95,20 @@ namespace TicTacToeGameSimulator
                     {
                         board[position] = userChoice;
                         positionOccupied[position] = true;
-                        
+                        chances++;
+
                         flag = false;
                     }
 
                     ShowBoard();
-                    
+
                     string result = HasWon();
-                    if(result=="User")
+                    if (result == "User")
                     {
                         Console.WriteLine("user is the winner");
                         return;
                     }
-                    else if(result =="Computer")
+                    else if (result == "Computer")
                     {
                         Console.WriteLine("computer is the winner");
                         return;
@@ -114,35 +117,60 @@ namespace TicTacToeGameSimulator
                     {
                         Console.WriteLine("continue playing");
                     }
-                    ComputerMovement();
+                   
+                }
+                ComputerMovement();
+                string result1 = HasWon();
 
+                if (result1 == "Computer")
+                {
+                    Console.WriteLine("computer is the winner");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("continue playing");
                 }
 
+
             }
+            if (chances==9)
             Console.WriteLine("it is a tie");
         }
         public void ComputerMovement()
-        {  
-            bool flag = true;
-          
-            while (flag)
+        { bool flag = true;
+             while(flag)
             {
-                int position = rand.Next(1,10);
-                if(!positionOccupied[position])
+                FindCanWon();
+                if (index == 1)
                 {
-                    board[position] = computerChoice;
-                    positionOccupied[position] = true;
-                    
+                    Console.WriteLine(" good work ,computer moved with strategy");
+                    chances++;
                     flag = false;
                 }
-
+                else
+                {
+                    int position = rand.Next(1, 10);
+                    if(!positionOccupied[position])
+                    {
+                        board[position] = computerChoice;
+                        positionOccupied[position] = true;
+                        chances++;
+                        ShowBoard();
+                        flag = false;
+                    }
+                }
+                
             }
-            ShowBoard();
+            
+            
+           
+            
         }
         public void Toss()
         {
             int choice = rand.Next(0, 2);
-            switch(choice)
+            switch (choice)
             {
                 case HEAD:
                     UserMovement();
@@ -174,12 +202,12 @@ namespace TicTacToeGameSimulator
                         return "User";
                     else
                         return "Computer";
-                }                     
+                }
 
             }
             for (int i = 1; i <= 3; i++)
             {
-                
+
                 if (board[i] == board[i + 3] && board[i + 3] == board[i + 6] && board[i] != ' ')
 
                 {
@@ -210,7 +238,32 @@ namespace TicTacToeGameSimulator
 
 
         }
+        public void FindCanWon()
+        {
+            
+            for (int i = 1; i < 10; i++)
+            {
+              if(!positionOccupied[i])
+                {
+                    board[i] = computerChoice;
+                    string winner = HasWon();
+                    if (winner == "Computer")
+                    {
+                        positionOccupied[i] = true;
+                        Console.WriteLine("computer marks at {0}", i);
+                        index = 1;
+                        ShowBoard();
+                        return;
+                    }
+                    else
+                        board[i] = ' ';
 
+
+
+                }
+            }
+
+        }
     }
 }
 
