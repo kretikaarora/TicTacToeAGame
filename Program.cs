@@ -21,8 +21,6 @@ namespace TicTacToeGameSimulator
             char[] board = ticTacToeGame.BoardFormation();
             ticTacToeGame.CharacterChoice();
             ticTacToeGame.Toss();
-
-
         }
 
         public char[] BoardFormation()
@@ -35,11 +33,9 @@ namespace TicTacToeGameSimulator
             {
                 board[position] = ' ';
                 positionOccupied[position] = false;
-
             }
             positionOccupied[0] = true;
             return board;
-
         }
         public void CharacterChoice()
         {
@@ -60,9 +56,7 @@ namespace TicTacToeGameSimulator
                     computerChoice = 'O';
                     Console.WriteLine("invalid input \n userchoice is alotted X and computerchoice is O");
                     break;
-
             }
-
         }
         public void ShowBoard()
         {
@@ -74,8 +68,7 @@ namespace TicTacToeGameSimulator
         }
         public void UserMovement()
         {
-
-            while (EmptySpace())
+           while (EmptySpace())
             {
                 bool flag = true;
                 while (flag)
@@ -116,8 +109,7 @@ namespace TicTacToeGameSimulator
                     else
                     {
                         Console.WriteLine("continue playing");
-                    }
-                   
+                    }                   
                 }
                 ComputerMovement();
                 string result1 = HasWon();
@@ -131,17 +123,13 @@ namespace TicTacToeGameSimulator
                 {
                     Console.WriteLine("continue playing");
                 }
-
-
             }
             if (chances==9)
             Console.WriteLine("it is a tie");
         }
         public void ComputerMovement()
         { bool flag = true;
-           
-
-            while (flag)
+         while (flag)
             {
                 DefenceAttack();
                 if (index == 2)
@@ -149,7 +137,6 @@ namespace TicTacToeGameSimulator
                     Console.WriteLine(" good work ,computer moved with defence");
                     chances++;
                     flag = false;
-
                 }
                 else
                 {
@@ -174,11 +161,7 @@ namespace TicTacToeGameSimulator
                     }
                 }
                 
-            }
-            
-            
-           
-            
+         }           
         }
         public void Toss()
         {
@@ -228,9 +211,7 @@ namespace TicTacToeGameSimulator
                         return "User";
                     else
                         return "Computer";
-
                 }
-
             }
 
             if (board[1] == board[5] && board[5] == board[9] && board[1] != ' ')
@@ -248,8 +229,6 @@ namespace TicTacToeGameSimulator
                     return "Computer";
             }
             return "Play";
-
-
         }
         public void FindCanWon()
         { 
@@ -269,13 +248,9 @@ namespace TicTacToeGameSimulator
                     }
                     else
                         board[i] = ' ';
-
-
-
+                  
                 }
             }
-
-
         }
         public void DefenceAttack()
         {
@@ -297,7 +272,6 @@ namespace TicTacToeGameSimulator
                     }
                     else
                         board[j] = ' ';
-
                 }
 
             }
