@@ -20,6 +20,7 @@ namespace TicTacToeGameSimulator
 
         static void Main(string[] args)
         {
+
            
             bool flag = true;
             while(flag)
@@ -42,6 +43,7 @@ namespace TicTacToeGameSimulator
                     flag = false;
                 }
             }
+
         }
         /// <summary>
         /// initialising empty positions to board array 
@@ -102,8 +104,8 @@ namespace TicTacToeGameSimulator
         /// </summary>
         public void UserMovement()
         {
-        while (EmptySpace())
-            {
+           while (EmptySpace())
+          {
                 bool flag = true;
                 while (flag)
                 {
@@ -142,7 +144,10 @@ namespace TicTacToeGameSimulator
                     else
                     {
                         Console.WriteLine("continue playing");
+
                     }                 
+                
+
                 }
                 // calling computer to move in the turn
                 ComputerMovement();
@@ -163,13 +168,16 @@ namespace TicTacToeGameSimulator
             Console.WriteLine("it is a tie");
         }
         public void ComputerMovement()
+
         {
 
             while (EmptySpace())
+
             {
                 //defence attack to not let user win
                 for (int j = 1; j < 10; j++)
                 {
+
                     if (!positionOccupied[j])
                     {
                         board[j] = userChoice;
@@ -187,6 +195,7 @@ namespace TicTacToeGameSimulator
                         else
                             board[j] = ' ';
                     }
+
                 }
                 //moving strategically by computer to win
                 for (int i = 1; i < 10; i++)
@@ -209,6 +218,7 @@ namespace TicTacToeGameSimulator
                             board[i] = ' ';
                     }
                 }
+
                 //occupying corner position first if empty
                 int[] cornerPosition = new int[] {1, 3, 7, 9 };
                 int position = cornerPosition[rand.Next(4)];
@@ -246,6 +256,7 @@ namespace TicTacToeGameSimulator
                 }
 
             }
+
 
         }
         /// <summary>
@@ -306,9 +317,7 @@ namespace TicTacToeGameSimulator
                         return "User";
                     else
                         return "Computer";
-
                 }
-
             }
 
             if (board[1] == board[5] && board[5] == board[9] && board[1] != ' ')
@@ -326,7 +335,54 @@ namespace TicTacToeGameSimulator
                     return "Computer";
             }
             return "Play";
+
         }       
+
+        public void FindCanWon()
+        { 
+            for (int i = 1; i < 10; i++)
+            {
+              if(!positionOccupied[i])
+                {
+                    board[i] = computerChoice;
+                    string winner = HasWon();
+                    if (winner == "Computer")
+                    {
+                        positionOccupied[i] = true;
+                        Console.WriteLine("computer marks at {0}", i);
+                        index = 1;
+                        ShowBoard();
+                        return;
+                    }
+                    else
+                        board[i] = ' ';
+                  
+                }
+            }
+        }
+        public void DefenceAttack()
+        {
+            for (int j = 1; j < 10; j++)
+            {
+                if (!positionOccupied[j])
+                {
+                    board[j] = userChoice;
+                    string winner1 = HasWon();
+                    if (winner1 == "User")
+                    {
+                        board[j] = computerChoice;
+                        positionOccupied[j] = true;
+                        Console.WriteLine("computer defence attack");
+                        index = 2;
+                        ShowBoard();
+                        return;
+
+                    }
+                    else
+                        board[j] = ' ';
+                }
+            }
+        }
     }
 }
 
