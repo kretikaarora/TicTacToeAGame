@@ -52,5 +52,13 @@ namespace TicTacToeGameSimulator
             }
 
         }
+        public void ShowBoard()
+        {
+            Console.WriteLine("|{0} |{1} |{2} |", board[1], board[2], board[3]);
+            Console.WriteLine("___________ ");
+            Console.WriteLine("|{0} |{1} |{2} |", board[4], board[5], board[6]);
+            Console.WriteLine("___________");
+            Console.WriteLine("|{0} |{1} |{2} |", board[7], board[8], board[9]);
+        }
     }
 }
