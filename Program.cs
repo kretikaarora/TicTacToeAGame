@@ -173,7 +173,7 @@ namespace TicTacToeGameSimulator
 
                     }
                 }
-                int[] cornerPosition = new int[] { 1, 3, 7, 9 };
+                int[] cornerPosition = new int[] {1, 3, 7, 9 };
                 int position = cornerPosition[rand.Next(4)];
                 if (!positionOccupied[position])
                 {
@@ -184,15 +184,29 @@ namespace TicTacToeGameSimulator
                     ShowBoard();
                     return;
                 }
-                int position1 = rand.Next(1, 10);
-                if (!positionOccupied[position1])
+               
+                int emptyPosition = 5;
+                if (!positionOccupied[emptyPosition])
                 {
-                    board[position1] = computerChoice;
-                    positionOccupied[position1] = true;
+                    board[emptyPosition] = computerChoice;
+                    positionOccupied[emptyPosition] = true;
+                    chances++;
+                    Console.WriteLine("occupied center position");
+                    ShowBoard();
+                    return;
+                }
+                int[] sidePosition = new int[] {2,4,6,8 };
+                int position2 = sidePosition[rand.Next(4)];
+                if (!positionOccupied[position2])
+                {
+                    board[position2] = computerChoice;
+                    positionOccupied[position2] = true;
+                    Console.WriteLine("occupied side position");
                     chances++;
                     ShowBoard();
                     return;
                 }
+
             }
 
         }
